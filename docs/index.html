@@ -2,6 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
     <title></title>
     
 </head>
@@ -15,9 +17,6 @@
     filter: contrast(180%) brightness(150%) saturate(2) ;" alt="The screen capture will appear in this box.">
     </div>
     <script>
-
-       
-
         document.getElementById('btnsm').addEventListener('click', function (ev) {
 
             var promisifiedOldGUM = function (constraints) {
@@ -51,7 +50,7 @@
                     //};
                 })
                 .catch(function (err) {
-                    console.log(err.name + ": " + err.message);
+                    alert(err.name + ": " + err.message);
                 });
 
             //var p = navigator.mediaDevices.getUserMedia({
