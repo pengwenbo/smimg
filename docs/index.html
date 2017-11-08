@@ -26,7 +26,7 @@
 </head>
 <body>
     <div class="SM_wrap">
-        <input type="button" id="btnsm" value="点你行不行" />
+        <input type="button" id="btnsm" value="点你行不行1" />
         <video id="video"></video>
         <canvas id="canvas"></canvas>
         <button id="startbutton">Take photo</button>
@@ -40,11 +40,12 @@
     <script>
         document.getElementById('btnsm').addEventListener('click', function (ev) {
       
-    alert('ok1'); 
+ 
             var p = navigator.mediaDevices.getUserMedia({
                 audio: false,
                 video: true
             });
+                   alert("fuck");
 
             p.then(function (mediaStream) {
                 var video = document.querySelector('video');
