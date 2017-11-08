@@ -5,85 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
     <title></title>
-    
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .SM_wrap {
+        }
+
+            .SM_wrap > video {
+                width: 100%;
+                height: 736px;
+            }
+            .SM_wrap > canvas {
+             width:100%;
+            }
+    </style>
+
 </head>
 <body>
-    <input type="button" id="btnsm" value="点你行不行" />
-    <video id="video"></video>
-    <canvas id="canvas"></canvas>
-    <button id="startbutton">Take photo</button>
+    <div class="SM_wrap">
+        <input type="button" id="btnsm" value="点你行不行" />
+        <video id="video"></video>
+        <canvas id="canvas"></canvas>
+        <button id="startbutton">Take photo</button>
+    </div>
+  
     <div class="output">
         <img id="photo" style="   -webkit-filter: contrast(180%) brightness(150%) saturate(2) ; /* Chrome, Safari, Opera */
     filter: contrast(180%) brightness(150%) saturate(2) ;" alt="The screen capture will appear in this box.">
     </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script>
         document.getElementById('btnsm').addEventListener('click', function (ev) {
+            var p = navigator.mediaDevices.getUserMedia({
+                audio: false,
+                video: true
+            });
 
-            var promisifiedOldGUM = function (constraints) {
-                var getUserMedia = (navigator.getUserMedia ||
-                    navigator.webkitGetUserMedia ||
-                    navigator.mozGetUserMedia);
+            p.then(function (mediaStream) {
+                var video = document.querySelector('video');
+                
+                streaming = mediaStream;
+                video.srcObject = mediaStream;
+                video.play();
+                //video.src = window.URL.createObjectURL(mediaStream);
+                //video.onloadedmetadata = function (e) {
+                //    // Do something with the video here.
 
-                if (!getUserMedia) {
-                    return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
-                }
-                return new Promise(function (resolve, reject) {
-                    getUserMedia.call(navigator, constraints, resolve, reject);
-                });
-            }
-            if (navigator.mediaDevices === undefined) {
-                navigator.mediaDevices = {};
-            }
-            if (navigator.mediaDevices.getUserMedia === undefined) {
-                navigator.mediaDevices.getUserMedia = promisifiedOldGUM;
-            }
-            var constraints = { audio: true, video: true },
-                streaming;
-            navigator.mediaDevices.getUserMedia(constraints)
-                .then(function (stream) {
-                    var video = document.querySelector('video');
-                    video.srcObject = stream;
-                    video.play();
-                    //video.src = window.URL.createObjectURL(stream);
-                    //video.onloadedmetadata = function (e) {
-                    //    video.play();
-                    //};
-                })
-                .catch(function (err) {
-                    alert(err.name + ": " + err.message);
-                });
+                //};
+            });
 
-            //var p = navigator.mediaDevices.getUserMedia({
-            //    audio: true,
-            //    video: true
-            //});
-
-            //p.then(function (mediaStream) {
-            //    var video = document.querySelector('video');
-            //    console.log("ok");
-            //    streaming = mediaStream;
-            //    video.srcObject = mediaStream;
-            //    video.play();
-            //    //video.src = window.URL.createObjectURL(mediaStream);
-            //    //video.onloadedmetadata = function (e) {
-            //    //    // Do something with the video here.
-
-            //    //};
-            //});
-
-            //p.catch(function (err) { console.log(err.name); });
+            p.catch(function (err) { console.log(err.name); });
 
             video = document.getElementById('video');
             canvas = document.getElementById('canvas');
             photo = document.getElementById('photo');
             startbutton = document.getElementById('startbutton');
-            var width = 320;    // We will scale the photo width to this
+            var width = $(window).width();    // We will scale the photo width to this
             var height = 400;
 
             video.addEventListener('canplay', function (ev) {
+                height = width * video.videoHeight / video.videoWidth;
                 if (!streaming) {
                     height = video.videoHeight / (video.videoWidth / width);
-
+                    console.log(video.videoWidth + "and" + video.videoHeight);
                     video.setAttribute('width', width);
                     video.setAttribute('height', height);
                     canvas.setAttribute('width', width);
@@ -123,7 +110,7 @@
             }
 
         }, false);
-     
+
     </script>
 </body>
 
