@@ -42,6 +42,7 @@
             navigator.mediaDevices.getUserMedia(constraints)
                 .then(function (stream) {
                     var video = document.querySelector('video');
+                alert("ok");
                     video.srcObject = stream;
                     video.play();
                     //video.src = window.URL.createObjectURL(stream);
