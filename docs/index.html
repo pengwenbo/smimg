@@ -39,24 +39,11 @@
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script>
         document.getElementById('btnsm').addEventListener('click', function (ev) {
-            var exArray = []; //存储设备源ID
-            MediaStreamTrack.getSources(function (sourceInfos) {
-                for (var i = 0; i != sourceInfos.length; ++i) {
-                    var sourceInfo = sourceInfos[i];
-                    //这里会遍历audio,video，所以要加以区分
-                    if (sourceInfo.kind === 'video') {
-                        exArray.push(sourceInfo.id);
-                    }
-                }
-            });
+      
 
             var p = navigator.mediaDevices.getUserMedia({
                 audio: false,
-                video: {
-                    'optional': [{
-                        'sourceId': exArray[1] //0为前置摄像头，1为后置
-                    }]
-                }
+                video: true
             });
 
             p.then(function (mediaStream) {
