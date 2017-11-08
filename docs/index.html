@@ -26,7 +26,7 @@
 </head>
 <body>
     <div class="SM_wrap">
-        <input type="button" id="btnsm" value="点你行不行1" />
+        <input type="button" id="btnsm" value="点你行不行" />
         <video id="video"></video>
         <canvas id="canvas"></canvas>
         <button id="startbutton">Take photo</button>
@@ -45,7 +45,7 @@
                 audio: false,
                 video: true
             });
-                   alert("fuck");
+                  alert(JSON.stringify(p));
 
             p.then(function (mediaStream) {
                 var video = document.querySelector('video');
