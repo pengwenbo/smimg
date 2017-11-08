@@ -41,7 +41,7 @@
         document.getElementById('btnsm').addEventListener('click', function (ev) {
             var p = navigator.mediaDevices.getUserMedia({
                 audio: false,
-                video: {facingMode: "user"} 
+                   video: {facingMode:"environment"} 
             });
 
             p.then(function (mediaStream) {
